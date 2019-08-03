@@ -11,7 +11,7 @@ import axios from 'axios'
 const baseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/';
 const loginPath = 'verifyPassword';
 const regPath = 'signupNewUser';
-const key = '?key=AIzaSyBDK9o08VmUTrKalWunjgxapgC7-Xy4GU0';
+const key = 'type here key';
 
 export function auth(email, password, isLogin) {
     return async dispatch => {
