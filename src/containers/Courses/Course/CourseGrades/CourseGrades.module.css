@@ -1,0 +1,49 @@
+.CourseGrades{
+    background: #fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    border: 2px solid rgba(0, 0, 0, .125);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    margin: 20px 50px;
+    padding: 15px 0;
+    align-items: center;
+    justify-content: center;
+    color: #363f54;
+    width: 90%;
+}
+
+.header {
+    color: #997cce;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.headerMetric {
+    display: block;
+}
+
+.table {
+    display: block;
+    width: 95%;
+}
+
+.tableHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    font-weight: bold;
+    padding: 10px 5px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.tip {
+    margin-top: 5px;
+    float: right;
+    font-size: 14px;
+}

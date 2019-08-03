@@ -1,0 +1,17 @@
+.Participation {
+    display: flex;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: #f1f6fa;
+    margin-left: 20px;
+    opacity: .7;
+}
+
+.Participation > div {
+    padding: 0 5px;
+}
+
+.fa {
+    color: #997cce;
+    padding: 0 5px;
+}

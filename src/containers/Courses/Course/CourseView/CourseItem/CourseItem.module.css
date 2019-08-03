@@ -1,0 +1,14 @@
+.CourseItem {
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    width: 90%;
+    padding: 10px;
+    display: inline-block;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.CourseItem span {
+    font-size: 12px;
+}

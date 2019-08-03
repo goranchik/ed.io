@@ -1,0 +1,17 @@
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+
+export const LOAD_COURSE = 'LOAD_COURSE';
+export const EDIT_COURSE = 'EDIT_COURSE';
+export const SAVE_COURSE = 'SAVE_COURSE';
+
+export const SAVE_PROFESSOR_COURSE = 'SAVE_PROFESSOR_COURSE';
+
+export const SAVE_COURSE_PARTICIPANTS = 'SAVE_COURSE_PARTICIPANTS';
+export const SAVE_STUDENT_GRADE = 'SAVE_STUDENT_GRADE';
+export const SAVE_STUDENT_PROGRESS = 'SAVE_STUDENT_PROGRESS';
+
+export const FILTER_VIEW = 'FILTER_VIEW';
+export const SORT_VIEW = 'SORT_VIEW';
+export const CHANGE_VIEW_TYPE = 'CHANGE_VIEW_TYPE';
+

@@ -1,0 +1,47 @@
+.Grade {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: .3;
+    align-items: center;
+    text-align: left;
+    padding: 0 5px;
+}
+
+.Grade:nth-child(2n) {
+    background-color: #f7fafd;
+}
+.metric {
+    display: block;
+}
+
+.grade span {
+    background-color: #3a4959;
+    color: #fff;
+    border-radius: 100%;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    padding: 4px;
+}
+
+.grade {
+    cursor: pointer;
+}
+
+.Grade input {
+    font-size: 14px;
+    text-align: center;
+    width: 35px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .7);
+    border: 1px solid #eee;
+}
+
+.progress {
+    display: block;
+    cursor: pointer;
+}

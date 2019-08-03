@@ -1,0 +1,9 @@
+.Sidebar {
+    position: fixed;
+    height: 100%;
+    background: rgba(33, 51, 71, 0.8);
+    top: 50px;
+    z-index: 90;
+    float: left;
+}
+

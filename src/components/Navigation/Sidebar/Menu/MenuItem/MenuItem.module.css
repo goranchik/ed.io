@@ -1,0 +1,24 @@
+.MenuItem {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.MenuItem i {
+    font-size: 25px;
+}
+
+.MenuItem a {
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    position: relative;
+    transition: opacity .3s;
+}
+
+.MenuItem a:hover, .active {
+    opacity: .7;
+}
+
+.label {
+    padding-left: 10px;
+}

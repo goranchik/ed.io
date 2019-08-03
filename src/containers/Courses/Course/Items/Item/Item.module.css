@@ -1,0 +1,27 @@
+.Item {
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Item:nth-child(2n) {
+    background-color: #f7fafd;
+}
+
+.assignee {
+    display: inline-flex;
+    padding: 4px;
+    font-size: 12px;
+    background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);
+    box-sizing: border-box;
+    border-radius: 3px;
+    color: #fff;
+    margin-right: 3px;
+}
+
+.unassign {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 3px;
+    font-weight: bold;
+}

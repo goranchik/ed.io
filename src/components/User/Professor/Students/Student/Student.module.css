@@ -1,0 +1,24 @@
+.Student {
+    display: flex;
+    flex-direction: row;
+    flex-grow: .3;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 0 5px;
+}
+
+.Student:nth-child(2n) {
+    background-color: #f7fafd;
+}
+
+.grade span {
+    background-color: #3a4959;
+    color: #fff;
+    border-radius: 100%;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    padding: 4px;
+}
