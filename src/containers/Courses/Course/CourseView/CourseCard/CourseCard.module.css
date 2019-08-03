@@ -1,0 +1,31 @@
+.CourseCard {
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, .5);
+    height: 100%;
+    width: 44%;
+    margin: 10px;
+    padding: 10px;
+}
+
+.card {
+    height: 100px;
+    width: 100%;
+}
+
+.name {
+    margin-top: 10px;
+    padding: 10px 0;
+}
+
+.date {
+    font-size: 12px;
+    font-style: italic;
+    float: right;
+    padding-top: 5px;
+}
+.date strong {
+    margin-left: 5px;
+}
+

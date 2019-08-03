@@ -1,0 +1,6 @@
+.DropDowns {
+    display: flex;
+    flex-direction: row;
+    flex-grow: .05;
+    width: 90%;
+}

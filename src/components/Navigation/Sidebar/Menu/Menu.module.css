@@ -1,0 +1,9 @@
+.Menu {
+}
+
+.Menu ul {
+    margin-top: 15px;
+    list-style: none;
+    padding: 0 10px;
+    align-items: center;
+}

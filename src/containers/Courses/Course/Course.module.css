@@ -1,0 +1,16 @@
+.Course {
+    box-sizing: border-box;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.Course > div {
+    background: #fff;
+}
+
+.buttons {
+    float: right;
+}

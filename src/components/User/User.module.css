@@ -1,0 +1,51 @@
+.User {
+    display: flex;
+    align-items: center;
+    color: #282c34;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 16px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 80px;
+}
+
+.level {
+    position: relative;
+    color: #ffffff;
+    background: #997cce;
+    display: flex;
+    height: 20px;
+    width: 20px;
+    right: -45px;
+    border-radius: 20px;
+    align-items: center;
+    font-weight: 700;
+    bottom: 15px;
+}
+
+.level span {
+    margin: 0 auto;
+}
+
+.name {
+    padding: 0 20px;
+
+}
+
+.grade {
+    padding: 5px 10px;
+    background: #f1f6fa;
+    border-radius: 15px;
+    opacity: .7;
+}
+
+.star {
+    margin-left: 5px;
+    color: #997cce;
+    font-size: 20px;
+}
+

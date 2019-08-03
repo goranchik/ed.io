@@ -1,0 +1,36 @@
+.Header {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    background: #fff;
+    z-index: 1000;
+    border-bottom: 1px solid #ccc;
+}
+
+.university {
+    margin-left: 10px;
+    color: #997cce;
+    padding: 5px;
+}
+
+.leftBlock {
+    display: flex;
+    align-items: center;
+}
+
+
+.rightBlock {
+    display: flex;
+    align-items: center;
+}
+
+.fa {
+    color: #997cce;
+    padding-right: 15px;
+    font-size: 20px;
+}

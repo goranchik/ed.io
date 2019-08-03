@@ -1,0 +1,78 @@
+.DropDown {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.label {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filter .label:before {
+    content: '\f0b0';
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+}
+
+.label:after {
+    content: '\f0dd';
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    padding-left: 5px;
+    vertical-align: .2rem;
+    font-weight: 900;
+}
+
+.sort .label:before {
+    content: '\f884';
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    padding-right: 5px;
+    vertical-align: middle;
+    font-weight: 900;
+}
+
+.type .label:before {
+    content: '\f00a';
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    padding-right: 5px;
+    vertical-align: middle;
+    font-weight: 900;
+}
+
+
+.menu {
+    display: none;
+    position: absolute;
+    transform: translate3d(0px, 25px, 0px);
+    top: 0;
+    left: 0;
+    will-change: transform;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 120px;
+}
+
+.menu.show {
+    display: block;
+}
+
+.item {
+    border: 1px solid rgba(0, 0, 0, .25);
+    padding: 2px 5px;
+    background: #fff;
+    z-index: 1000;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.item.active {
+    background: rgba(33, 51, 71, 0.8);
+    color: #fff;
+}
