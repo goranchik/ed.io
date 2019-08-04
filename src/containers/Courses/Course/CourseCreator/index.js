@@ -110,7 +110,7 @@ class CourseCreator extends Component {
             .reduce((res, key) => {
                     let value = this.state.formControls[key].value;
                     if (key === 'participants') {
-                        value = [...value.map(p => p.id), this.props.professorId]
+                        value = !!value ? [...value.map(p => p.id), this.props.professorId] : value
                     }
                     return {
                         ...res,
@@ -120,15 +120,23 @@ class CourseCreator extends Component {
                     }
                 },
                 {
-                    id: this.props.course.id,
-                    participants: [this.props.professorId]
+                    id: this.props.course.id
                 }
             );
 
-        this.props.saveCourse(course);
-        this.props.saveProfessorCourse(this.props.professorId, course.id);
+        if (this.props.course.isNew) {
+            this.props.saveProfessorCourse(this.props.professorId, course.id);
+        }
 
-        this.props.saveCourseParticipants(course.id, !!course.participants ? course.participants : []);
+        if (!course.participants && this.props.course.isNew) {
+            course.participants = [this.props.professorId];
+        }
+
+        this.props.saveCourse(course);
+
+        if (!!course.participants) {
+            this.props.saveCourseParticipants(course.id, course.participants);
+        }
 
         this.setState({
             isRedirect: true
