@@ -30,14 +30,14 @@ const initialState = {
                     assignees: [2]
                 },
             ],
-            participants: [1,2]
+            participants: [1, 2, 3]
         },
         {
             id: 2,
             name: 'Celebrating Cultures',
             desc: 'Mount Orange is proud to have in its community students, teachers, parents and helpers from a wide variety of different cultures. This course, open to anyone, showcases the diversity of our traditions, our language and our landscapes. Please join',
             start: '20190701',
-            end: '20190804',
+            end: '20190808',
             items: [
                 {
                     id: 1,
@@ -60,7 +60,7 @@ const initialState = {
                     assignees: [1]
                 },
             ],
-            participants: [1]
+            participants: [1, 3]
         },
 
         {
@@ -91,7 +91,7 @@ const initialState = {
                     assignees: [1,2]
                 },
             ],
-            participants: [1,2]
+            participants: [1, 2, 3]
         },
         {
             id: 4,
@@ -121,7 +121,7 @@ const initialState = {
                     assignees: []
                 },
             ],
-            participants: [1]
+            participants: [1, 3]
         },
         {
             id: 5,
@@ -151,7 +151,7 @@ const initialState = {
                     assignees: [2]
                 },
             ],
-            participants: [1, 2]
+            participants: [1, 2, 3]
         },
         {
             id: 6,
@@ -181,7 +181,7 @@ const initialState = {
                     assignees: []
                 },
             ],
-            participants: [1]
+            participants: [1, 3]
         },
         {
             id: 7,
@@ -211,7 +211,7 @@ const initialState = {
                     assignees: []
                 },
             ],
-            participants: [2]
+            participants: [2, 3]
         }
     ],
     course: null,
