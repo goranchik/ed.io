@@ -13,7 +13,7 @@ import Modal from "../../../../components/UI/Modal";
 import Backdrop from "../../../../components/UI/Backdrop";
 import Select from "../../../../components/UI/Select";
 import {saveCourseParticipants, saveProfessorCourse} from "../../../../store/actions/user";
-
+import PropTypes from 'prop-types'
 
 const DATE_FORMAT = 'YYYYMMDD';
 
@@ -60,8 +60,26 @@ function createFormControls(course, participants, items) {
     }
 }
 
-
 class CourseCreator extends Component {
+
+    static propTypes = {
+        course: PropTypes.object,
+        professorId: PropTypes.number.isRequired,
+        users: PropTypes.arrayOf(PropTypes.object),
+        participants: PropTypes.arrayOf(PropTypes.object),
+        onCancel: PropTypes.func.isRequired,
+        saveCourse: PropTypes.func,
+        saveCourseParticipants: PropTypes.func,
+        saveProfessorCourse: PropTypes.func
+    };
+
+    static defaultProps = {
+        course: {},
+        professorId: 3,
+        users: [],
+        participants: [],
+        onCancel: () => {}
+    };
 
     state = {
         isFormValid: validateForm(createFormControls(this.props.course, this.props.participants, this.props.items)),
@@ -89,7 +107,8 @@ class CourseCreator extends Component {
     };
 
     changeHandler = (value, name) => {
-        const formControls = {...this.state.formControls};
+
+        const {formControls} = this.state;
         const control = {...formControls[name]};
 
         control.touched = true;
@@ -105,12 +124,16 @@ class CourseCreator extends Component {
     };
 
     saveHandler = () => {
-        const course = Object.keys(this.state.formControls)
-            .filter(key => this.state.formControls[key].touched)
+        const {formControls} = this.state;
+        const {professorId, saveCourse, saveProfessorCourse, saveCourseParticipants} = this.props;
+        const {id: courseId, isNew: courseIsNew} = this.props.course;
+
+        const course = Object.keys(formControls)
+            .filter(key => formControls[key].touched)
             .reduce((res, key) => {
-                    let value = this.state.formControls[key].value;
+                    let value = formControls[key].value;
                     if (key === 'participants') {
-                        value = !!value ? [...value.map(p => p.id), this.props.professorId] : value
+                        value = !!value ? [...value.map(p => p.id), professorId] : value
                     }
                     return {
                         ...res,
@@ -120,22 +143,22 @@ class CourseCreator extends Component {
                     }
                 },
                 {
-                    id: this.props.course.id
+                    id: courseId
                 }
             );
 
-        if (this.props.course.isNew) {
-            this.props.saveProfessorCourse(this.props.professorId, course.id);
+        if (courseIsNew) {
+            saveProfessorCourse(professorId, course.id);
         }
 
-        if (!course.participants && this.props.course.isNew) {
-            course.participants = [this.props.professorId];
+        if (!course.participants && courseIsNew) {
+            course.participants = [professorId];
         }
 
-        this.props.saveCourse(course);
+        saveCourse(course);
 
         if (!!course.participants) {
-            this.props.saveCourseParticipants(course.id, course.participants);
+            saveCourseParticipants(course.id, course.participants);
         }
 
         this.setState({
@@ -154,6 +177,9 @@ class CourseCreator extends Component {
     };
 
     addParticipantSelectHandler = id => {
+
+        const {addParticipant} = this.state;
+
         if (id === 0) {
             return
         }
@@ -162,12 +188,12 @@ class CourseCreator extends Component {
             addParticipant: {
                 flag: true,
                 participants: [
-                    ...this.state.addParticipant.participants,
+                    ...addParticipant.participants,
                     {
-                        ...this.state.addParticipant.usersToAdd.filter(u => u.id === id)[0]
+                        ...addParticipant.usersToAdd.filter(u => u.id === id)[0]
                     }
                 ],
-                usersToAdd: [...this.state.addParticipant.usersToAdd.filter(u => u.id !== id)]
+                usersToAdd: [...addParticipant.usersToAdd.filter(u => u.id !== id)]
             }
         })
     };
@@ -183,14 +209,17 @@ class CourseCreator extends Component {
     };
 
     doAddParticipant = () => {
-        const participantsControl = {...this.state.formControls.participants};
+
+        const {formControls, addParticipant} = this.state;
+
+        const participantsControl = {...formControls.participants};
 
         participantsControl.touched = true;
-        participantsControl.value = [...this.state.addParticipant.participants];
+        participantsControl.value = [...addParticipant.participants];
 
         this.setState({
             formControls: {
-                ...this.state.formControls,
+                ...formControls,
                 participants: participantsControl
             },
             addParticipant: {
@@ -202,8 +231,9 @@ class CourseCreator extends Component {
     };
 
     deleteParticipantHandler = (id) => {
-        const participantsControl = {...this.state.formControls.participants};
-        const itemsControl = {...this.state.formControls.items};
+        const {formControls} = this.state;
+        const participantsControl = {...formControls.participants};
+        const itemsControl = {...formControls.items};
 
         participantsControl.touched = true;
         participantsControl.value = participantsControl.value.filter(p => p.id !== id);
@@ -222,7 +252,7 @@ class CourseCreator extends Component {
 
         this.setState({
             formControls: {
-                ...this.state.formControls,
+                ...formControls,
                 participants: participantsControl,
                 items: {
                     ...itemsControl,
@@ -245,21 +275,22 @@ class CourseCreator extends Component {
     };
 
     addAssigneeSelectHandler = (id) => {
+        const {addAssignee} = this.state;
         if (id === 0) {
             return
         }
 
         this.setState({
             addAssignee: {
-                ...this.state.addAssignee,
+                ...addAssignee,
                 flag: true,
                 assignees: [
-                    ...this.state.addAssignee.assignees,
+                    ...addAssignee.assignees,
                     {
-                        ...this.state.addAssignee.usersToAssign.filter(u => u.id === id)[0]
+                        ...addAssignee.usersToAssign.filter(u => u.id === id)[0]
                     }
                 ],
-                usersToAssign: [...this.state.addAssignee.usersToAssign.filter(u => u.id !== id)]
+                usersToAssign: [...addAssignee.usersToAssign.filter(u => u.id !== id)]
             }
         })
     };
@@ -276,8 +307,9 @@ class CourseCreator extends Component {
     };
 
     doAddAssignee = () => {
-        const itemsControl = {...this.state.formControls.items};
-        const itemId = this.state.addAssignee.itemId;
+        const {formControls, addAssignee} = this.state;
+        const itemsControl = {...formControls.items};
+        const itemId = addAssignee.itemId;
 
         itemsControl.touched = true;
 
@@ -285,13 +317,13 @@ class CourseCreator extends Component {
             .map(item => (
                 {
                     ...item,
-                    assignees: this.state.addAssignee.assignees.map(a => a.id)
+                    assignees: addAssignee.assignees.map(a => a.id)
                 }
             ))[0];
 
         this.setState({
             formControls: {
-                ...this.state.formControls,
+                ...formControls,
                 items: {
                     ...itemsControl,
                     value: [
@@ -310,8 +342,8 @@ class CourseCreator extends Component {
     };
 
     unAssignHandler = itemId => userId => {
-
-        const itemsControl = {...this.state.formControls.items};
+        const {formControls} = this.state;
+        const itemsControl = {...formControls.items};
 
         itemsControl.touched = true;
         const item = itemsControl.value.filter(p => p.id === itemId)
@@ -319,7 +351,7 @@ class CourseCreator extends Component {
 
         this.setState({
             formControls: {
-                ...this.state.formControls,
+                ...formControls,
                 items: {
                     ...itemsControl,
                     value: [
@@ -341,7 +373,8 @@ class CourseCreator extends Component {
     };
 
     doAddItem = () => {
-        const itemsControl = {...this.state.formControls.items};
+        const {formControls} = this.state;
+        const itemsControl = {...formControls.items};
 
         itemsControl.touched = true;
 
@@ -353,7 +386,7 @@ class CourseCreator extends Component {
 
         this.setState({
             formControls: {
-                ...this.state.formControls,
+                ...formControls,
                 items: {
                     ...itemsControl,
                     value: [
@@ -389,30 +422,34 @@ class CourseCreator extends Component {
             }
         })
     };
+
     deleteItemHandler = (id) => {
-        const itemsControl = {...this.state.formControls.items};
+        const {formControls} = this.state;
+        const itemsControl = {...formControls.items};
 
         itemsControl.touched = true;
         itemsControl.value = itemsControl.value.filter(p => p.id !== id);
 
         this.setState({
             formControls: {
-                ...this.state.formControls,
+                ...formControls,
                 items: itemsControl
             }
         });
     };
 
     renderControls() {
-        return Object.keys(this.state.formControls).map((controlName, index) => {
-            const control = this.state.formControls[controlName];
+        const {formControls} = this.state;
+        const {users} = this.props;
+        return Object.keys(formControls).map((controlName, index) => {
+            const control = formControls[controlName];
             return (
                 control.type === 'participants'
                     ? <Participants
                         key={index}
                         isEdit={true}
                         participants={control.value}
-                        users={this.props.users}
+                        users={users}
                         onAdd={this.addParticipantHandler}
                         onDelete={this.deleteParticipantHandler}
                     />
@@ -421,8 +458,8 @@ class CourseCreator extends Component {
                         key={index}
                         isEdit={true}
                         items={control.value}
-                        participants={[...this.state.formControls.participants.value]}
-                        users={this.props.users}
+                        participants={[...formControls.participants.value]}
+                        users={users}
                         onAdd={this.addItemHandler}
                         onDelete={this.deleteItemHandler}
                         onAssign={this.assignHandler}
@@ -453,12 +490,15 @@ class CourseCreator extends Component {
         })
     }
 
-
     render() {
+
+        const {course, onCancel} = this.props;
+        const {isFormValid, addParticipant, addAssignee, addItem} = this.state;
+
         return (
             <div className={cls.CourseCreator}>
                 <div>
-                    <h1>{!!this.props.course && this.props.course.isNew ? 'Create' : 'Edit'} Course</h1>
+                    <h1>{!!course && course.isNew ? 'Create' : 'Edit'} Course</h1>
 
                     <form onSubmit={this.submitHandler}>
 
@@ -468,13 +508,13 @@ class CourseCreator extends Component {
                             <Button
                                 type="success"
                                 onClick={this.saveHandler}
-                                disabled={!this.state.isFormValid}
+                                disabled={!isFormValid}
                             >
-                                {!!this.props.course && this.props.course.isNew ? 'Create' : 'Save'}
+                                {!!course && course.isNew ? 'Create' : 'Save'}
                             </Button>
                             <Button
                                 type="cancel"
-                                onClick={this.props.onCancel}
+                                onClick={onCancel}
                                 disabled={false}
                             >
                                 Cancel
@@ -483,7 +523,7 @@ class CourseCreator extends Component {
                     </form>
 
                     {
-                        this.state.addParticipant.flag
+                        addParticipant.flag
                             ? <React.Fragment>
                                 <Modal
                                     width="400"
@@ -494,14 +534,14 @@ class CourseCreator extends Component {
                                     onOk={this.doAddParticipant}
                                 >
                                     <Participants
-                                        participants={this.state.addParticipant.participants}
+                                        participants={addParticipant.participants}
                                     />
                                     {
-                                        !!this.state.addParticipant.usersToAdd.length
+                                        !!addParticipant.usersToAdd.length
                                             ? <Select
                                                 label="Add a participant"
                                                 options={
-                                                    [{value: 0, text: ''}].concat(this.state.addParticipant.usersToAdd
+                                                    [{value: 0, text: ''}].concat(addParticipant.usersToAdd
                                                         .map(u => ({value: u.id, text: u.name})))
                                                 }
                                                 onChange={event => this.addParticipantSelectHandler(+event.target.value)}
@@ -518,7 +558,7 @@ class CourseCreator extends Component {
                     }
 
                     {
-                        this.state.addAssignee.flag
+                        addAssignee.flag
                             ? <React.Fragment>
                                 <Modal
                                     width="400"
@@ -530,14 +570,14 @@ class CourseCreator extends Component {
                                 >
                                     <Participants
                                         header="Assignees"
-                                        participants={this.state.addAssignee.assignees}
+                                        participants={addAssignee.assignees}
                                     />
                                     {
-                                        !!this.state.addAssignee.usersToAssign.length
+                                        !!addAssignee.usersToAssign.length
                                             ? <Select
                                                 label="Add an assignee"
                                                 options={
-                                                    [{value: 0, text: ''}].concat(this.state.addAssignee.usersToAssign
+                                                    [{value: 0, text: ''}].concat(addAssignee.usersToAssign
                                                         .map(u => ({value: u.id, text: u.name})))
                                                 }
                                                 onChange={event => this.addAssigneeSelectHandler(+event.target.value)}
@@ -553,21 +593,21 @@ class CourseCreator extends Component {
                     }
 
                     {
-                        this.state.addItem.flag
+                        addItem.flag
                             ? <React.Fragment>
                                 <Modal
                                     width="400"
                                     height="200"
                                     message="Add new item"
-                                    okMessage={this.state.addItem.valid ? 'Save' : ''}
+                                    okMessage={addItem.valid ? 'Save' : ''}
                                     onClose={this.cancelAddItem}
                                     onOk={this.doAddItem}
                                 >
                                     <Input
                                         label="New Item"
                                         autoFocus={true}
-                                        valid={this.state.addItem.valid}
-                                        value={this.state.addItem.value}
+                                        valid={addItem.valid}
+                                        value={addItem.value}
                                         shouldValidate={true}
                                         touched={true}
                                         errorMessage="Cannot be empty & min length > 3"

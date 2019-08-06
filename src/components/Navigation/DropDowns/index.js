@@ -1,8 +1,35 @@
 import React, {Component} from 'react'
 import cls from './DropDowns.module.css'
 import DropDown from './DropDown';
+import PropTypes from "prop-types";
 
 class DropDowns extends Component {
+
+    static propTypes = {
+        initial: PropTypes.shape({
+            filter: PropTypes.string.isRequired,
+            sort: PropTypes.string.isRequired,
+            type: PropTypes.string.isRequired
+        }),
+        onClickHandlers: PropTypes.shape({
+            filter: PropTypes.func.isRequired,
+            sort: PropTypes.func.isRequired,
+            type: PropTypes.func.isRequired
+        })
+    };
+
+    static defaultProps = {
+        initial: {
+            filter: 'In progress',
+            sort: 'Course name',
+            type: 'Card'
+        },
+        onClickHandlers: {
+            filter: () => {},
+            sort: () => {},
+            type: () => {}
+        }
+    };
 
     state = {
         dropDowns: [
@@ -68,11 +95,11 @@ class DropDowns extends Component {
 
         ]
     };
-    
+
     componentDidMount() {
-        const init = this.props.initial;
+        const {initial: init} = this.props;
         if (!!init) {
-            const dropDowns = [...this.state.dropDowns];
+            const {dropDowns} = this.state;
             Object.keys(init).forEach(key => {
                 dropDowns
                     .filter(dd => dd.menu.type === key)
@@ -90,7 +117,7 @@ class DropDowns extends Component {
     }
 
     showClickHandler = type => {
-        const dropDowns = [...this.state.dropDowns];
+        const {dropDowns} = this.state;
 
         dropDowns.filter(dd => dd.menu.type === type).forEach(dd => dd.show = !dd.show);
 
@@ -100,7 +127,7 @@ class DropDowns extends Component {
     };
 
     changeHandler = type => name => {
-        const dropDowns = [...this.state.dropDowns];
+        const {dropDowns} = this.state;
 
         const dd = dropDowns.filter(dd => dd.menu.type === type)[0];
 
@@ -117,10 +144,11 @@ class DropDowns extends Component {
     };
 
     render() {
+        const {dropDowns} = this.state;
         return (
             <div className={cls.DropDowns}>
                 {
-                    this.state.dropDowns.map((dd, index) => (
+                    dropDowns.map((dd, index) => (
                         <DropDown
                             key={index}
                             label={dd.menu.name}

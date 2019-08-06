@@ -80,7 +80,6 @@ class Course extends Component {
                     !this.props.course ? null :
                         this.props.course.isEdit
                             ? <CourseCreator
-                                course={this.props.course}
                                 onCancel={this.handleClick}
                                 participants={participants}
                                 users={users}

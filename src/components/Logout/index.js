@@ -2,8 +2,13 @@ import React, {Component} from 'react'
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {logout} from "../../store/actions/user";
+import PropTypes from "prop-types";
 
 class Logout extends Component {
+
+    static propTypes = {
+        logout: PropTypes.func
+    };
 
     componentDidMount() {
         this.props.logout()
